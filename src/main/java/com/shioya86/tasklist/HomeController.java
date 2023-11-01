@@ -1,6 +1,7 @@
 package com.shioya86.tasklist;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +48,16 @@ public class HomeController {
     String deleteItem(@RequestParam("id") String id) {
         System.out.println("id = '" + id + "'");
         dao.delete(id);
+        return "redirect:/list";
+    }
+
+    @GetMapping("/update")
+    String updateItem(@RequestParam("id") String id,
+                      @RequestParam("task") String task,
+                      @RequestParam("deadline") String deadline,
+                      @RequestParam("done") boolean done) {
+        TaskItem taskItem = new TaskItem(id, task, deadline, done);
+        dao.update(taskItem);
         return "redirect:/list";
     }
 }

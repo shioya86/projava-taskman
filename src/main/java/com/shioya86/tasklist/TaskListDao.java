@@ -33,6 +33,16 @@ public class TaskListDao {
         return number;
     }
 
+    public int update(TaskItem taskItem) {
+        int number = jdbcTemplate.update(
+                "update tasklist set task = ?, deadline = ?, done = ? where id = ?",
+                taskItem.task(),
+                taskItem.deadline(),
+                taskItem.done(),
+                taskItem.id());
+        return number;
+    }
+
     public List<TaskItem> findAll() {
         String query = "select * from tasklist";
 
